@@ -11,18 +11,37 @@ Axiom negate: R -> R.
 
 (* Axiom 1: R is a commutative ring *)
 
+Create HintDb real.
+
 (* add is an abelian group *)
 Axiom add_assoc: forall (a b c: R), add a (add b c) = add (add a b) c.
-Axiom add_unit: forall (a: R), add zero a = a.
+Axiom add_zero: forall (a: R), add zero a = a.
 Axiom negate_inv: forall (a: R),  add a (negate a) = zero.
 Axiom add_commute: forall (a b: R), add a b = add b a.
+
+
+Hint Rewrite negate_inv: real.
+Hint Rewrite add_zero: real.
+
 
 (* mul is a commutative ring strcture *)
 Axiom mul: R -> R -> R.
 Axiom mul_commute: forall (a b: R), mul a b = mul b a.
-Axiom mul_unit: forall (a: R), mul one a = a.
+Axiom mul_one: forall (a: R), mul one a = a.
+Axiom mul_zero: forall (a: R), mul zero a = zero.
+
+
+
+Lemma mul_zero': forall (a: R), mul a zero = zero.
+Proof.
+  intros; rewrite mul_commute. apply mul_zero.
+Qed.
 
 Axiom mul_negate: forall (x: R) (x_neq_zero: x <> zero), exists (y: R), mul x y = one.
+
+Hint Rewrite mul_one: real.
+Hint Rewrite mul_zero: real.
+Hint Rewrite mul_zero': real.
 
 (* Axiom 2: relation that is transitive and irreflexive *)
 Axiom lt : R -> R -> Prop.
@@ -42,13 +61,41 @@ Axiom exist_sqrt: forall (x: R), gt x zero -> exists (y: R), mul y y = x.
 
 Definition infinitesimal (d: R) : Prop := mul d d = zero.
 
+Hint Unfold infinitesimal: real.
+
 (* Axiom 4: Kock Lawvere *)
 (* TODO: how do I state that f is from D -> R *)
 Axiom kl: forall (f: R -> R), forall (d: R) (dinfin: infinitesimal d), exists (a: R),
         f d = add (f zero) (mul d a).
 
 (* TODO: less clunky way to state uniqueness? *)
-Axiom kl_uniq: forall (f: R -> R), forall (d: R) (dinfin: infinitesimal d), exists (a1 a2: R),
+Axiom kl_uniq: forall (f: R -> R), forall (d: R) (dinfin: infinitesimal d)  (a1 a2: R),
         forall (A1: f d = add (f zero) (mul d a1))
          (A2: f d = add (f zero) (mul d a2)), a1 = a2.
   
+
+Definition fmicrocancel (a: R) (d: R): R :=  mul a d.
+
+Lemma fmicrocancel_at_zero: forall (a: R), fmicrocancel a zero = zero.
+Proof.
+  intros.
+  unfold fmicrocancel.
+  autorewrite with real; auto.
+Qed.
+  
+(* If multiplication is equal for arbitrary infinitesimal, then the
+numbers are equal *)
+Lemma microcancel:
+  forall (a b d: R) (infin: infinitesimal d) (muleq: mul a d = mul b d),
+    a = b.
+Proof.
+  intros.
+  eapply kl_uniq with (d := d) (f:= fmicrocancel a);
+    auto;
+    unfold fmicrocancel;
+    autorewrite with real; rewrite mul_commute; auto.
+    (* TODO: better way to proof engineer this? *)
+    cut (mul d a = mul a d);
+    cut (mul b d = mul d b);
+    intros; try congruence; try rewrite mul_commute; auto.
+Qed.
