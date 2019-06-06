@@ -20,6 +20,9 @@ that crucially relies on living in constructive logic to create infinitesimals
 such as `dx`, and provides axioms to perform "physicist-style" proofs
 rigorously!
 
+Many thanks to [Arnaud Spiwack](http://assert-false.net/arnaud/)for showing me
+this axiomatization.
+
 ## References
 
 - [Synthetic Differential Geometry (Blog post by Andrej Bauer)][sgd blog]
