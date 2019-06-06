@@ -1,0 +1,78 @@
+# -*- mode: gitignore; -*-
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+
+# Org-mode
+.org-id-locations
+*_archive
+
+# flymake-mode
+*_flymake.*
+
+# eshell files
+/eshell/history
+/eshell/lastdir
+
+# elpa packages
+/elpa/
+
+# reftex files
+*.rel
+
+# AUCTeX auto folder
+/auto/
+
+# cask packages
+.cask/
+dist/
+
+# Flycheck
+flycheck_*.el
+
+# server auth directory
+/server/
+
+# projectiles files
+.projectile
+
+# directory configuration
+.dir-locals.el
+
+# network security
+/network-security.data
+.*.aux
+*.a
+*.cma
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.cmxs
+*.glob
+*.ml.d
+*.ml4.d
+*.mli.d
+*.mllib.d
+*.mlpack.d
+*.native
+*.o
+*.v.d
+*.vio
+*.vo
+.coq-native/
+.csdp.cache
+.lia.cache
+.nia.cache
+.nlia.cache
+.nra.cache
+csdp.cache
+lia.cache
+nia.cache
+nlia.cache
+nra.cache
