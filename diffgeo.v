@@ -122,19 +122,28 @@ Proof.
   simpl. autorewrite with real. rewrite  muleq. rewrite mul_commute. reflexivity.
 Qed.
 
-Definition der (f: R -> R) (x: R): { a: R | forall (d: D),  f (add x (D_to_R d)) = add (f x) (mul (D_to_R d) a) }.
+Definition der (f: R -> R) (x: R) (d: D): { a: R |  f (add x (D_to_R d)) = add (f x) (mul (D_to_R d) a) }.
 Proof.
   intros.
-  intros.
-  pose (kl_fn (fun d => f (add x (D_to_R d)))) as f'.
+  pose (kl_fn (fun d => f (add x (D_to_R d))) d) as f'.
+
+  destruct f' as [a Ha].
   econstructor.
-  intros.
-  destruct (f' d) as [a Ha].
   rewrite Ha.
   autorewrite with real.
   reflexivity.
-
 Qed.
 
 
+(** Is synthetic differential geometry doomed? **)
+(** There is no way to "get" an R without having a "D" at hand? **)
+Definition der_what_we_want (f: R -> R) (x: R): R.
+Proof.
+  intros.
+  pose (kl_fn (fun d => f (add x (D_to_R d)))) as f'.
+Abort.
+
+
+Definition mul_fn (f: R -> R) (g: R -> R) (x: R): R := mul (f x) (g x).
+Definition add_fn(f: R -> R) (g: R -> R) (x: R): R := add (f x) (g x).
 
