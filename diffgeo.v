@@ -137,10 +137,13 @@ Qed.
 
 (** Is synthetic differential geometry doomed? **)
 (** There is no way to "get" an R without having a "D" at hand? **)
-Definition der_what_we_want (f: R -> R) (x: R): R.
+Definition der_what_we_want (f: R -> R) (x: R): { a: R | forall (d: D), f (add x (D_to_R d)) = add (f x) (mul (D_to_R d) a) }.
 Proof.
   intros.
   pose (kl_fn (fun d => f (add x (D_to_R d)))) as f'.
+  (** We are stuck here, since we have a forall d, exists a **)
+  (** what we want is exists a, forall d **)
+  destruct f'.
 Abort.
 
 
