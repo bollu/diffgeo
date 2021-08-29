@@ -120,7 +120,7 @@ Definition _0_D: D := exist _ _0 _0_infinitesimal.
 (* Danil: I think this order of quantifiers is right.
    Apart from the original Kock's SDG paper, see also
    https://www.fuw.edu.pl/~kostecki/sdg.pdf (Section 2)
-   for explicitly quantified formula. *)
+   for the explicitly quantified formula. *)
 Axiom kl_exists_unique: forall (f : D -> R),
     { a: R | forall (d : D), f d = (f _0_D) + a × d /\
              (* the uniqueness part: if we can write [f] in the way
