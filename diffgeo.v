@@ -114,13 +114,6 @@ Qed.
 
 (* _0 as a member of D *)
 Definition _0_D: D := exist _ _0 _0_infinitesimal.
-  
-
-Definition is_linear_at (f : D -> R) (a b : R) (d : D) : Prop :=
-  f d = b + a × d.
-
-Definition contractible (A : Type) :=
-  {centre : A | forall (a : A), a = centre}.
 
 (** Kock Lawvere **)
 
